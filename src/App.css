@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+
+.pers650 {
+  perspective: 650px;
+  animation: PerspectiveAnimation infinite 2s ease-out;
+}
+
+@keyframes PerspectiveAnimation {
+  from {
+    perspective: 650px;
+  }
+  to {
+    perspective: 0px;
+  }
+}
+
+/* Define the container div, the cube div, and a generic face */

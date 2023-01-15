@@ -1,0 +1,10 @@
+.panel {
+    width: 200px;
+    height: 200px;
+    /* margin: auto auto; */
+    /* position: relative; */
+    /* border: 1px solid black; */
+    position: absolute;
+    top: calc((100vh - 200px)/2);
+    left: calc((100vw - 200px)/2);
+}
