@@ -1,0 +1,91 @@
+.fadeIn-enter {
+    opacity: 0;
+    transform: scale(0);
+}
+.fadeIn-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    /* transition: opacity 1000ms ease-out, transform 1000ms ease-out;
+     */
+    transition: all 1.7s ease-out;
+}
+.fadeIn-enter-done {
+    opacity: 1;
+}
+
+/* Slide Up */
+.slideUp-enter {
+    opacity: 1;
+}
+.slideUp-enter-active {
+    opacity: 0;
+    transform: translateY(-500px);
+    transition: opacity 1000ms, transform 1000ms;
+}
+.slideUp-enter-done {
+    opacity: 0;
+    transform: translateY(-500px);
+}
+
+/* Slide Down */
+.slideDown-enter {
+    opacity: 1;
+}
+.slideDown-enter-active {
+    opacity: 0;
+    transform: translateY(500px);
+    transition: opacity 1500ms, transform 1500ms;
+}
+.slideDown-enter-done {
+    opacity: 0;
+    transform: translateY(500px);
+}
+
+/* alert */
+.alert-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+.alert-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+.alert-exit {
+    opacity: 1;
+}
+.alert-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}
+
+/* progress */
+.progress-enter {
+    opacity: 0;
+    bottom: 0px;
+    transition: opacity 200ms, bottom 200ms;
+}
+.progress-enter-active {
+    opacity: 1;
+    animation-name: xxx;
+    animation-duration: 800ms;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-direction: alternate-reverse;
+}
+.progress-enter-done {
+    opacity: 1;
+    bottom: -2px;
+    transition: opacity 200ms, bottom 200ms;
+}
+
+@keyframes xxx {
+    from {
+        left: -300px;
+    }
+    to {
+        left: 300px;
+    }
+}

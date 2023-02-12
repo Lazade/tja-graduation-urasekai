@@ -1,0 +1,189 @@
+.landingWrapper {
+    font-family: 'DotGothic16', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    background-color: #ddd;
+}
+
+.landingWrapper .bgVideo {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.headTitle {
+    position: relative;
+    z-index: 2;
+    font-size: 80px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    word-spacing: 4px;
+    background: linear-gradient(to right, rgb(229, 41, 76) 0%, rgb(68, 231, 201) 20%, rgb(22, 129, 236) 40%, rgb(244, 135, 33) 60%, rgb(229, 41, 76) 80%);
+    background-size: 200% auto;
+    background-clip: text;
+    /* background-position: 200% l; */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation-name: shine;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-direction: reverse;
+    user-select: none;
+}
+
+@keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+}
+
+.loginCard {
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(30px);
+	backdrop-filter: blur(30px);
+    position: fixed;
+    z-index: 2;
+    left: calc(50vw - 200px);
+    bottom: 90px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid white;
+    border-top: none;
+    box-sizing: border-box;
+    border-radius: 14px;
+    padding: 24px 16px;
+    overflow: hidden;
+}
+
+.loginCardTopBar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(63, 154, 235);
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+}
+
+.loginCardTopBar:hover {
+    height: 4px;
+}
+
+.cardInput {
+    margin-bottom: 20px;
+}
+
+.cardInput:last-child {
+    margin-bottom: 0;
+}
+
+.cardInput .label {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 6px;
+    text-align: left;
+    color: #666;
+    user-select: none;
+}
+
+.cardInput .input {
+    width: 100%;
+    height: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-indent: 12px;
+    font-size: 16px;
+    font-family: 'DotGothic16', sans-serif;
+    user-select: none;
+}
+
+.loginButtonWrapper {
+    /* margin-bottom: 20px; */
+    margin-top: 30px;
+}
+
+.loginButton {
+    cursor: pointer;
+    background-color: unset;
+    border: 2px dashed rgb(249, 96, 13);
+    border-radius: 8px;
+    font-size: 24px;
+    font-family: 'DotGothic16', sans-serif;
+    font-weight: bold;
+    color: rgb(249, 96, 13);
+    padding: 2px 12px;
+    user-select: none;
+}
+
+/* progress */
+.progress {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgb(249, 96, 13);
+    opacity: 0;
+}
+
+/* alert */
+.alertBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(230, 230, 230);
+    z-index: 3;
+}
+.alertCover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* top: 1%;
+    left: 1%;
+    right: 1%;
+    bottom: 1%; */
+    background-color: rgb(10, 10, 10);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.alertWindow {
+    position: absolute;
+    width: 420px;
+    height: 180px;
+    top: calc(50% - 90px);
+    left: calc(50% - 210px);
+    /* border: 4px solid rgb(243, 30, 193); */
+    border-radius: 10px;
+    background-image: url("/public/assets/img/immortal-object.png");
+    background-size: cover;
+}
+.alertInner {
+    height: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 170px;
+    color: white;
+    /* margin-top: 40px; */
+    cursor: pointer;
+    user-select: none;
+}
