@@ -20,7 +20,6 @@ export const Landing: React.FC = () => {
     const [linkstarted, setLinkstarted] = useState<boolean>(false)
     const [loadingWorld, setLoadingWorld] = useState<boolean>(false)
     const [showAlert, setShowAlert] = useState<boolean>(false)
-    // const [retryLeftCount, setRetryLeftCount] = useState<number>(3)
     const [isAdmin, setIsAdmin] = useState<boolean>(false)
     const [showTjaAlert, setShowTjaAlert] = useState<boolean>(false)
 
@@ -33,10 +32,6 @@ export const Landing: React.FC = () => {
         e.preventDefault();
         if (portname === "") { return }
         if (portname === "tja" && isAdmin) {
-            // stinger
-            // display description of TJA
-            // alert("tja の 紹介");
-            // return
             setShowTjaAlert(true)
         }
         if (portname !== "sotugyou") {
@@ -45,14 +40,6 @@ export const Landing: React.FC = () => {
             setLinking(true)
         }
     }
-
-    // const updateRetryLeft = () => {
-    //     let currentRetryLeftCount = retryLeftCount - 1
-    //     if (currentRetryLeftCount < 0) {
-    //         currentRetryLeftCount = 0
-    //     }
-    //     setRetryLeftCount(currentRetryLeftCount)
-    // }
 
     const handleKeyDown = (e: KeyboardEvent) => {
         if (e.code === "Enter") {
@@ -170,9 +157,6 @@ export const Landing: React.FC = () => {
                     timeout={300}
                     unmountOnExit
                     classNames="alert"
-                    onExited={() => {
-                        // updateRetryLeft()
-                    }}
                 >
                     <div ref={alertRef} className={styles.alertBg}>
                         <div className={styles.alertCover}>
@@ -184,7 +168,6 @@ export const Landing: React.FC = () => {
                                     }}
                                     onKeyDown={() => {}}
                                 >
-                                    {/* {retryLeftCount === 0 ? "ACCESS DENIED" : "NOT FOUND"} */}
                                 </div>
                             </div>
                         </div>
@@ -214,7 +197,8 @@ export const Landing: React.FC = () => {
                                                 .deleteAll()
                                                 .pauseFor(1000)
                                                 .typeString('<p>こんにちは</p>')
-                                                .typeString('<p>私たちTOKYO JAPANESE ACADEMYの理念は、</p>')
+                                                .pauseFor(500)
+                                                .typeString('<br/><p>私たちTOKYO JAPANESE ACADEMYの理念は、</p>')
                                                 .typeString('<p>より幅広い人材に日本語教育の機会を提供し、</p>')
                                                 .typeString('<p>日本の大学・大学院・専門学校へ進学し日本及び他国で</p>')
                                                 .typeString('<p>活躍する人材のキャリアを支援することです。</p>')
@@ -226,12 +210,7 @@ export const Landing: React.FC = () => {
                                                 .pauseFor(1000)
                                                 .typeString('<br/>')
                                                 .typeString('<br/>')
-                                                .typeString('<br/>')
-                                                .typeString('<p style="text-align:right">つつく</p>')
-                                                // .deleteAll()
-                                                // .callFunction(() => {
-                                                //     console.log('All strings were deleted');
-                                                // })
+                                                .typeString('<p style="text-align:right">つづく</p>')
                                                 .start();
                                         }}
                                         options={{
