@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useRef, useEffect } from "react";
+import React, { Fragment, useState, useRef, useEffect, KeyboardEvent } from "react";
+import Typewriter from "typewriter-effect";
 import { CSSTransition } from "react-transition-group";
 import styles from './Landing.module.css';
 import './Landing.animation.css';
@@ -8,14 +9,20 @@ export const Landing: React.FC = () => {
     const nodeRef2 = useRef(null);
     const progressRef = useRef(null);
     const alertRef = useRef(null);
+    const tjaAlertRef = useRef(null);
+    const submitButtonRef = useRef<HTMLButtonElement>(null);
     const vidRef = useRef<HTMLVideoElement>(null);
+    const [inputLabel, setInputLabel] = useState<string>("")
+    const [submitButtonLabel, setSubmitButtonLabel] = useState<string>("")
     const [portname, setPortname] = useState<string>("")
     const [worldname, setWorldname] = useState<string>("ザ・セカイ")
     const [linking, setLinking] = useState<boolean>(false)
     const [linkstarted, setLinkstarted] = useState<boolean>(false)
     const [loadingWorld, setLoadingWorld] = useState<boolean>(false)
     const [showAlert, setShowAlert] = useState<boolean>(false)
-    const [retryLeftCount, setRetryLeftCount] = useState<number>(5)
+    // const [retryLeftCount, setRetryLeftCount] = useState<number>(3)
+    const [isAdmin, setIsAdmin] = useState<boolean>(false)
+    const [showTjaAlert, setShowTjaAlert] = useState<boolean>(false)
 
     const portnameOnChange = (e: React.FormEvent<HTMLInputElement>) => {
         const newValue = e.currentTarget.value
@@ -24,10 +31,13 @@ export const Landing: React.FC = () => {
 
     const loginButtonTrigger = (e: React.FormEvent) => {
         e.preventDefault();
-        if (retryLeftCount === 0 && portname === "tja") {
+        if (portname === "") { return }
+        if (portname === "tja" && isAdmin) {
             // stinger
             // display description of TJA
-            return
+            // alert("tja の 紹介");
+            // return
+            setShowTjaAlert(true)
         }
         if (portname !== "sotugyou") {
             setShowAlert(true);
@@ -36,13 +46,42 @@ export const Landing: React.FC = () => {
         }
     }
 
-    const updateRetryLeft = () => {
-        let currentRetryLeftCount = retryLeftCount - 1
-        if (currentRetryLeftCount < 0) {
-            currentRetryLeftCount = 0
+    // const updateRetryLeft = () => {
+    //     let currentRetryLeftCount = retryLeftCount - 1
+    //     if (currentRetryLeftCount < 0) {
+    //         currentRetryLeftCount = 0
+    //     }
+    //     setRetryLeftCount(currentRetryLeftCount)
+    // }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.code === "Enter") {
+            submitButtonRef.current?.click();
         }
-        setRetryLeftCount(currentRetryLeftCount)
     }
+
+    const loginCardTopBarClick = () => {
+        const currentIsAdmin = isAdmin;
+        setIsAdmin(!currentIsAdmin);
+        if (isAdmin) {
+            setInputLabel("管理者ID")
+            setSubmitButtonLabel("ログイン")
+        } else {
+            setInputLabel("セカイのネーム")
+            setSubmitButtonLabel("リンクスタート")
+        }
+        setPortname("")
+    }
+
+    useEffect(() => {
+        if (isAdmin) {
+            setInputLabel("管理者ID")
+            setSubmitButtonLabel("ログイン")
+        } else {
+            setInputLabel("セカイのネーム")
+            setSubmitButtonLabel("リンクスタート")
+        }
+    }, [isAdmin])
 
     return (
         <Fragment>
@@ -82,29 +121,30 @@ export const Landing: React.FC = () => {
                         setLoadingWorld(true)
                     }}
                 >
-                    <div ref={nodeRef2} className={styles.loginCard}>
-                        <div className={styles.loginCardTopBar}></div>
+                    <div ref={nodeRef2} className={styles.loginCard + " " + (isAdmin ? styles.isAdmin : "")}>
+                        <div 
+                            className={styles.loginCardTopBar}
+                            onClick={loginCardTopBarClick}
+                        ></div>
                         <div className={styles.cardInput}>
-                            <p className={styles.label}>人数</p>
-                            <input className={styles.input} type="number" placeholder="6" value={6} readOnly />
-                        </div>
-                        <div className={styles.cardInput}>
-                            <p className={styles.label}>セカイネーム</p>
+                            <p className={styles.label}>{inputLabel}</p>
                             <input 
-                                className={styles.input} 
+                                className={styles.input}
                                 type="text" 
-                                placeholder="Port Name" 
+                                placeholder="" 
                                 value={portname}
                                 onChange={portnameOnChange}
+                                onKeyDown={handleKeyDown}
                             />
                         </div>
                         <div className={styles.loginButtonWrapper}>
                             <button 
                                 className={styles.loginButton}
+                                ref={submitButtonRef}
                                 type="submit"
                                 onClick={loginButtonTrigger}
                             >
-                                リンクスタート
+                                {submitButtonLabel}
                             </button>
                         </div>
                         <CSSTransition 
@@ -131,7 +171,7 @@ export const Landing: React.FC = () => {
                     unmountOnExit
                     classNames="alert"
                     onExited={() => {
-                        updateRetryLeft()
+                        // updateRetryLeft()
                     }}
                 >
                     <div ref={alertRef} className={styles.alertBg}>
@@ -139,11 +179,66 @@ export const Landing: React.FC = () => {
                             <div className={styles.alertWindow}>
                                 <div 
                                     className={styles.alertInner}
-                                    onClick={() => { 
+                                    onClick={() => {
                                         setShowAlert(false)
                                     }}
+                                    onKeyDown={() => {}}
                                 >
-                                    {retryLeftCount === 0 ? "ACCESS DENIED" : "NOT FOUND"}
+                                    {/* {retryLeftCount === 0 ? "ACCESS DENIED" : "NOT FOUND"} */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </CSSTransition>
+
+                <CSSTransition
+                    in={showTjaAlert}
+                    nodeRef={tjaAlertRef}
+                    timeout={300}
+                    unmountOnExit
+                    classNames="alert"
+                >
+                    <div className={styles.alertBg}>
+                        <div className={styles.alertCover}>
+                            <div className={styles.alertTerminalWindow}>
+                                <div className={styles.alertTerminalWindowInner}>
+                                    <Typewriter
+                                        onInit={(typewriter) => {
+                                            typewriter.pauseFor(1000)
+                                                .typeString('.')
+                                                .pauseFor(1000)
+                                                .typeString('.')
+                                                .pauseFor(1000)
+                                                .typeString('.')
+                                                .pauseFor(1000)
+                                                .deleteAll()
+                                                .pauseFor(1000)
+                                                .typeString('<p>こんにちは</p>')
+                                                .typeString('<p>私たちTOKYO JAPANESE ACADEMYの理念は、</p>')
+                                                .typeString('<p>より幅広い人材に日本語教育の機会を提供し、</p>')
+                                                .typeString('<p>日本の大学・大学院・専門学校へ進学し日本及び他国で</p>')
+                                                .typeString('<p>活躍する人材のキャリアを支援することです。</p>')
+                                                .typeString('<p>また外国との人材交流を通じ、</p>')
+                                                .typeString('<p>日本社会のグローバル化推進の一助となります。</p>')
+                                                .pauseFor(1000)
+                                                .typeString('<br/>')
+                                                .typeString('<p>TJA ITコースは、みなさんの就職実現に必要な日本教育を最短で徹底指導します。</p>')
+                                                .pauseFor(1000)
+                                                .typeString('<br/>')
+                                                .typeString('<br/>')
+                                                .typeString('<br/>')
+                                                .typeString('<p style="text-align:right">つつく</p>')
+                                                // .deleteAll()
+                                                // .callFunction(() => {
+                                                //     console.log('All strings were deleted');
+                                                // })
+                                                .start();
+                                        }}
+                                        options={{
+                                            delay: 50,
+                                            deleteSpeed: 1
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
